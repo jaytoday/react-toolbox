@@ -7,13 +7,14 @@ const TransferWebpackPlugin = require('transfer-webpack-plugin');
 
 module.exports = {
   context: __dirname,
-  entry: ['./app/index.jsx'],
+  entry: ['./app/index.js'],
   output: {
     path: path.join(__dirname, 'build'),
     filename: 'docs.js'
   },
   resolve: {
-    extensions: ['', '.jsx', '.scss', '.js', '.json', '.md'],
+    extensions: ['', '.scss', '.js', '.json', '.md'],
+    packageMains: ['browser', 'web', 'browserify', 'main', 'style'],
     alias: {
       'react-toolbox': path.resolve(__dirname + './../components')
     },
@@ -27,23 +28,26 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /(\.js|\.jsx)$/,
+        test: /\.js$/,
         exclude: /(node_modules)/,
         loader: 'babel'
       }, {
-        test: /(\.scss|\.css)$/,
-        loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass!toolbox')
+        test: /\.(scss|css)$/,
+        loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass')
       }, {
-        test: /(\.txt)$/,
+        test: /\.(txt)$/,
         loader: 'raw',
         include: path.resolve(__dirname, './app/components/layout/main/modules')
       }, {
-        test: /(\.md)$/,
+        test: /\.(md)$/,
         loader: 'html?removeComments=false!highlight!markdown'
       }
     ]
   },
   postcss: [autoprefixer],
+  sassLoader: {
+    data: '@import "' + path.resolve(__dirname, 'app/theme/_theme.scss') + '";'
+  },
   plugins: [
     new ExtractTextPlugin('docs.css', { allChunks: true }),
     new webpack.optimize.UglifyJsPlugin({

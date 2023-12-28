@@ -1,3 +1,4 @@
+const pkg = require('./package');
 const path = require('path');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
@@ -8,7 +9,7 @@ module.exports = {
   devtool: 'inline-source-map',
   entry: [
     'webpack-hot-middleware/client',
-    './spec/index.jsx'
+    './spec/index.js'
   ],
   output: {
     path: path.join(__dirname, 'build'),
@@ -16,16 +17,17 @@ module.exports = {
     publicPath: '/build/'
   },
   resolve: {
-    extensions: ['', '.jsx', '.scss', '.js', '.json']
+    extensions: ['', '.scss', '.js', '.json'],
+    packageMains: ['browser', 'web', 'browserify', 'main', 'style']
   },
   module: {
     loaders: [
       {
-        test: /(\.js|\.jsx)$/,
-        exclude: /(node_modules)/,
-        loader: 'babel'
+        test: /\.js$/,
+        loader: 'babel',
+        exclude: [/(node_modules)/, /react-css-themr/]
       }, {
-        test: /(\.scss|\.css)$/,
+        test: /\.(scss|css)$/,
         loader: ExtractTextPlugin.extract('style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass?sourceMap')
       }
     ]
@@ -36,7 +38,8 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development')
+      'process.env.NODE_ENV': JSON.stringify('development'),
+      VERSION: JSON.stringify(pkg.version)
     })
   ]
 };

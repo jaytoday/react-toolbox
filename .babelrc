@@ -1,11 +1,9 @@
 {
-  "stage": 2,
-  "optional": ["es7.classProperties"],
+  "presets": ["es2015", "stage-0", "react"],
   "env": {
     "development": {
-      "plugins": ["react-transform"],
-      "extra": {
-        "react-transform": {
+      "plugins": [
+        ["react-transform", {
           "transforms": [{
             "transform": "react-transform-hmr",
             "imports": ["react"],
@@ -14,8 +12,8 @@
             "transform": "react-transform-catch-errors",
             "imports": ["react", "redbox-react"]
           }]
-        }
-      }
+        }]
+      ]
     }
   }
 }

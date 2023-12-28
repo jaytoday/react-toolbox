@@ -1,20 +1,43 @@
-const countries = {
-  'EN-gb': 'England',
-  'ES-es': 'Spain',
-  'TH-th': 'Thailand',
-  'EN-en': 'USA'
-};
+const countriesArray = ['Spain', 'England', 'USA', 'Thailand', 'Tongo', 'Slovenia'];
+const countriesObject = {'ES-es': 'Spain', 'TH-th': 'Thailand', 'EN-gb': 'England', 'EN-en': 'USA'};
 
-const selected = ['ES-es', 'EN-gb'];
+class AutocompleteTest extends React.Component {
+  state = {
+    simple: 'Spain',
+    multiple: ['ES-es', 'TH-th']
+  };
 
-const AutocompleteTest = () => (
-  <Autocomplete
-    auto={false}
-    label="Choose a country"
-    placeholder="Elements is up to you..."
-    dataSource={countries}
-    value={selected}
-  />
-)
+  handleSimpleChange = (value) => {
+    this.setState({simple: value});
+  };
+
+  handleMultipleChange = (value) => {
+    this.setState({multiple: value});
+  };
+
+  render () {
+    return (
+      <div>
+        <Autocomplete
+          direction="down"
+          onChange={this.handleMultipleChange}
+          label="Choose countries"
+          source={countriesObject}
+          value={this.state.multiple}
+        />
+
+        <Autocomplete
+          direction="down"
+          label="Choose a country"
+          hint="You can only choose one..."
+          multiple={false}
+          onChange={this.handleSimpleChange}
+          source={countriesArray}
+          value={this.state.simple}
+        />
+      </div>
+    );
+  }
+}
 
 return <AutocompleteTest />

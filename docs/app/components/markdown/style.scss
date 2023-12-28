@@ -19,7 +19,7 @@ $documentation-table-font-size: 1.4 * $unit;
   max-height: 100%;
   flex-grow: 1;
   padding-bottom: 4 * $unit;
-  overflow-y: scroll;
+  overflow-y: auto;
   font-size: $font-size-normal;
   color: $color-text;
   > *:not(pre) {
@@ -63,8 +63,9 @@ $documentation-table-font-size: 1.4 * $unit;
     text-align: left;
     > button {
       height: $documentation-playground-button-height;
-      > abbr {
-        font-size: $documentation-playground-button-font-size;
+      font-size: $documentation-playground-button-font-size;
+      line-height: $documentation-playground-button-height;
+      > span {
         line-height: $documentation-playground-button-height;
       }
     }

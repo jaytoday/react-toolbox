@@ -1,21 +1,25 @@
 # Drawer
 
-The [navigation drawer](https://www.google.com/design/spec/patterns/navigation-drawer.html) slides in from the left. It is a common pattern found in Google apps and follows the keylines and metrics for lists.
+The [navigation drawer](https://material.google.com/patterns/navigation-drawer.html) slides in from the left. It is a common pattern found in Google apps and follows the keylines and metrics for lists.
 
 <!-- example -->
 ```jsx
-import Drawer from 'react-toolbox/drawer';
+import Drawer from 'react-toolbox/lib/drawer';
 
 class DrawerTest extends React.Component {
-  handleClick = () => {
-    this.refs.drawer.show();
+  state = {
+    active: false
+  };
+
+  handleToggle = () => {
+    this.setState({active: !this.state.active});
   };
 
   render () {
     return (
       <div>
-        <Button kind='raised' accent label='Show Drawer' onClick={this.handleClick} />
-        <Drawer ref='drawer' hideable>
+        <Button label='Show Drawer' raised accent onClick={this.handleToggle} />
+        <Drawer active={this.state.active} onOverlayClick={this.handleToggle}>
           <h5>This is your Drawer.</h5>
           <p>You can embed any content you want, for example a Menu.</p>
         </Drawer>
@@ -25,19 +29,23 @@ class DrawerTest extends React.Component {
 }
 ```
 
+If you want to provide a theme via context, the component key is `RTDrawer`.
+
 ## Properties
 
 | Name              | Type          | Default         | Description|
 |:-----|:-----|:-----|:-----|
-| `active`        | `Boolean`       |  `false`        | If true, the drawer will be active by default.|
-| `className`     | `String`        |     `''`        | Sets a class to give customized styles to the drawer.|
-| `hideable`      | `Bool`          | `true`           | If true, the drawer will be hidden by clicking the overlay.|
-| `type`          | `String`        | `left`          | Type of drawer. It can be left or right to display the drawer on the left or right side of the screen.|
+| `active`          | `Boolean`       | `false`       | If true, the drawer will be visible.|
+| `className`       | `String`        | `''`          | Sets a class to give customized styles to the drawer.|
+| `onOverlayClick`  | `Function`      |               | Callback function to be invoked when the overlay is clicked.|
+| `type`            | `String`        | `left`        | Type of drawer. It can be `left` or `right` to display the drawer on the left or right side of the screen.|
 
-## Methods
+## Theme
 
-The Drawer has state to determine if it is being shown or not. It exposes methods to show and hide:
-
-- `show` is used to show the drawer.
-- `hide` is used to hide the drawer.
-
+| Name     | Description|
+|:---------|:-----------|
+| `active` | Used for the root class when the drawer is active.|
+| `content`  | Used for the drawer content.|
+| `drawer`   | Root class.|
+| `left`   | Added to the root class when drawer is to the left.|
+| `right`   | Added to the root class when drawer is to the right.|

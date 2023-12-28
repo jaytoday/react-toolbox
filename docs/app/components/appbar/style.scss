@@ -8,14 +8,12 @@
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
-  background: $color-primary-dark;
   box-shadow: $appbar-shadow;
 }
 
 .logo {
   width: $appbar-logo-size;
   height: $appbar-logo-size;
-  margin-top: ($appbar-height - $appbar-logo-size) / 2;
   fill: $color-primary-contrast;
 }
 
